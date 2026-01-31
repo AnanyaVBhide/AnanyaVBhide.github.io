@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ananya Bhide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+AU+SA:wght@100..400&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fff5f7 0%, #ffe3e8 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #ff9a9e;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #ff7b82;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ff9a9e;
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+            perspective: 1000px; 
+        }
+
+        /* 3D Interactive Font */
+        .hero h1 {
+            font-family: "Playwrite AU SA", serif; 
+            font-weight: 400;
+            font-size: 5rem;
+            color: #ff7b82; 
+            margin-bottom: 1rem;
+            cursor: default;
+            
+            text-shadow: 
+                0 1px 0 #faa,
+                0 2px 0 #faa,
+                0 3px 0 #faa,
+                0 4px 0 #faa,
+                0 6px 1px rgba(0,0,0,.1),
+                0 0 5px rgba(0,0,0,.1),
+                0 1px 3px rgba(0,0,0,.3),
+                0 3px 5px rgba(0,0,0,.2),
+                0 5px 10px rgba(0,0,0,.25);
+            
+            transition: transform 0.1s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: #666; 
+            margin-bottom: 2rem;
+        }
+
+        /* Section Styles */
+        section {
+            min-height: 100vh;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            font-size: 3rem;
+            color: #ff9a9e;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* About Section */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .profile-pic {
+            min-width: 200px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff9a9e 0%, #ffb3ba 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 154, 158, 0.4);
+        }
+
+        .about-text {
+            font-size: 1.2rem;
+            line-height: 2;
+            color: #555;
+            text-align: left;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #ffb3ba 0%, #ff9a9e 100%);
+            padding: 2rem;
+            border-radius: 20px;
+            color: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-card p {
+            line-height: 1.6;
+        }
+
+        /* Carousel Styles */
+        .carousel-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden; /* Hide scrollbar */
+            padding: 1rem 0;
+            cursor: col-resize; /* Indicates horizontal movement */
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 2rem;
+            padding: 10px;
+            
+            /* CHANGE: Smooth transition for hover effect */
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .gallery-item {
+            min-width: 300px;
+            background: linear-gradient(135deg, #ff9a9e 0%, #ffb3ba 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+            transition: transform 0.3s;
+            flex-shrink: 0;
+            
+            /* Prevent text selection while dragging/hovering */
+            user-select: none; 
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* CV Section */
+        .cv-content {
+            text-align: center;
+        }
+
+        .cv-content p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            color: #ff9a9e;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .hero p { font-size: 1.2rem; }
+            h2 { font-size: 2rem; }
+            nav ul { gap: 1.5rem; }
+            .about-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .about-text {
+                text-align: center;
+            }
+            
+            /* On Mobile, disable hover logic and allow Swipe */
+            .carousel-wrapper {
+                overflow-x: auto;
+                cursor: default;
+            }
+            .carousel-track {
+                width: max-content;
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#cv">CV</a></li>
+        </ul>
+    </nav>
+
+    <div class="hero" id="hero-section">
+        <h1 id="hero-title">Ananya Bhide</h1>
+    </div>
+
+    <section id="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <div class="profile-pic">                    
+                    <img src="YOUR_IMG_HERE" alt="Ananya Bhide" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                </div>
+                <div class="about-text">
+                    <p>Hi there! I'm Ananya Bhide, a final year Computer Science student at BITS Goa, India.</p>
+                    <p>I'm passionate about HCI, UX, and Neuroscience. I aim to design tools to enhance the classroom learning experience.</p>
+                    <p>I love to make art in my free time!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2>Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>Isomorph</h3>
+                    <p>A context-aware math learning tool for highschool students.</p>
+                </div>
+                <div class="project-card">
+                    <h3>Snout & About</h3>
+                    <p>A pet health tracker to help users care for their pets.</p>
+                </div>
+                <div class="project-card">
+                    <h3>Maharashtrian Thali Food Catering Service</h3>
+                    <p>A redesign case study on websites for traditional food catering services.</p>
+                </div>
+                <div class="project-card">
+                    <h3>Quick medical diagnosis framework</h3>
+                    <p>A work-in-progress UI design for a medical disgnosis system for common illnesses.</p>
+                </div>
+                <div class="project-card">
+                    <h3>Pathfinder</h3>
+                    <p>An ongoing course project to help the visually impaired navigate in dynamic environments.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <div class="container">
+            <h2>Gallery</h2>
+            <div class="carousel-wrapper" id="gallery-wrapper">
+                <div class="carousel-track" id="track">
+                    <div class="gallery-item">
+                        <h3>耳 Art</h3>
+                        <h3>耳 Art</h3>
+                        <h3>耳 Art</h3>
+                        <p>Making pasta</p>
+                    </div>
+                    <div class="gallery-item">
+                        <h3>答 Reading</h3>
+                        <p>Painting the Mona Lisa</p>
+                    </div>
+                    <div class="gallery-item">
+                        <h3>七 Music</h3>
+                        <p>Working with organic paper mache clay for my contemporary art final project.</p>
+                    </div>
+                    <div class="gallery-item">
+                        <h3>笨ｨ Hobbies</h3>
+                        <p>Painting for TEDx.</p>
+                    </div>
+                    <div class="gallery-item">
+                        <h3>笨ｨ Hobbies</h3>
+                        <p>Parody merch design.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cv">
+        <div class="container">
+            <h2>Curriculum Vitae</h2>
+            <div class="cv-content">
+                <p>Add your CV content, education, experience, and skills here.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Ananya Bhide</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // 1. 3D Interactive Text Logic
+        const heroSection = document.getElementById('hero-section');
+        const title = document.getElementById('hero-title');
+
+        heroSection.addEventListener('mousemove', (e) => {
+            const { offsetWidth: width, offsetHeight: height } = heroSection;
+            const { offsetX: x, offsetY: y } = e;
+            const moveX = ((x / width) * 40) - 20; 
+            const moveY = ((y / height) * 40) - 20;
+            title.style.transform = `rotateX(${-moveY}deg) rotateY(${moveX}deg)`;
+        });
+
+        heroSection.addEventListener('mouseleave', () => {
+            title.style.transform = `rotateX(0deg) rotateY(0deg)`;
+        });
+
+        // 2. Hover-to-Scroll Logic for Gallery
+        const wrapper = document.getElementById('gallery-wrapper');
+        const track = document.getElementById('track');
+
+        // Only enable mouse movement logic on non-touch screens
+        if (window.matchMedia("(hover: hover)").matches) {
+            wrapper.addEventListener('mousemove', (e) => {
+                // Get container dimensions
+                const wrapperRect = wrapper.getBoundingClientRect();
+                const wrapperWidth = wrapperRect.width;
+                const trackWidth = track.scrollWidth;
+
+                // Calculate how much we can scroll (track length minus container length)
+                // We multiply by -1 because translateX needs negative values to move left
+                const maxScroll = -(trackWidth - wrapperWidth);
+
+                // Calculate mouse X position relative to the container (0 to width)
+                const mouseX = e.clientX - wrapperRect.left;
+
+                // Convert mouse position to a percentage (0.0 to 1.0)
+                const percentage = mouseX / wrapperWidth;
+
+                // Clamp percentage between 0 and 1 just in case
+                const clampedPercentage = Math.max(0, Math.min(1, percentage));
+
+                // Map percentage to scroll distance
+                const scrollAmount = maxScroll * clampedPercentage;
+
+                // Apply transform
+                track.style.transform = `translateX(${scrollAmount}px)`;
+            });
+        }
+    </script>
+</body>
+</html>
+
