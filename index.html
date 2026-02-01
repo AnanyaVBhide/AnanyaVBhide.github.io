@@ -52,7 +52,6 @@
         }
 
         nav a:hover { color: #ff7b82; }
-
         nav a::after {
             content: '';
             position: absolute;
@@ -63,7 +62,6 @@
             background: #ff9a9e;
             transition: width 0.3s;
         }
-
         nav a:hover::after { width: 100%; }
 
         /* Hero Section */
@@ -112,6 +110,70 @@
             text-align: center;
         }
 
+        /* Shared Scrollable Carousel Wrapper */
+        .carousel-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            padding: 1rem 0;
+            cursor: col-resize;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 2rem;
+            padding: 10px;
+            transition: transform 0.2s ease-out; /* Smoother tracking */
+        }
+
+        /* Card Styles (Unified for Projects and Gallery) */
+        .card {
+            width: 300px; /* Increased width */
+            height: 350px; /* Increased height */
+            border-radius: 20px;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 154, 158, 0.3);
+        }
+
+        /* Project Card Specific */
+        .project-card {
+            background: linear-gradient(135deg, #ffb3ba 0%, #ff9a9e 100%);
+            color: white;
+            padding: 2rem;
+            text-align: left;
+        }
+
+        /* Gallery Card Specific */
+        .gallery-card {
+            padding: 1rem;
+            justify-content: space-between;
+        }
+
+        .gallery-card img, .gallery-card video {
+            width: 100%;
+            height: 250px; /* Taller images */
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .gallery-card p {
+            margin-top: 10px;
+            color: #ff7b82;
+            font-weight: 600;
+            text-align: center;
+        }
+
         /* About Section */
         .about-content {
             display: flex;
@@ -132,82 +194,7 @@
 
         .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Projects - Clickable Cards */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .project-card {
-            background: linear-gradient(135deg, #ffb3ba 0%, #ff9a9e 100%);
-            padding: 2rem;
-            border-radius: 20px;
-            color: white;
-            text-decoration: none;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: block;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(255, 154, 158, 0.3);
-        }
-
-        .project-card h3 { margin-bottom: 1rem; }
-
-        /* Gallery - 200x150 Cards */
-        .carousel-wrapper {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            padding: 1rem 0;
-            cursor: col-resize;
-        }
-
-        .carousel-track {
-            display: flex;
-            gap: 1.5rem;
-            padding: 10px;
-            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .gallery-item {
-            width: 200px;
-            height: 150px;
-            background: #fff;
-            padding: 0.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            text-align: center;
-            flex-shrink: 0;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            overflow: hidden;
-            transition: transform 0.2s;
-        }
-
-        .gallery-item:hover { transform: scale(1.03); }
-
-        .gallery-item img, .gallery-item video {
-            width: 100%;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .gallery-item p {
-            color: #ff7b82;
-            font-size: 0.8rem;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /* Lightbox (Click to Enlarge) */
+        /* Lightbox */
         #lightbox {
             display: none;
             position: fixed;
@@ -219,26 +206,38 @@
             z-index: 2000;
             justify-content: center;
             align-items: center;
-            cursor: zoom-out;
+            flex-direction: column;
         }
 
         #lightbox-content {
-            max-width: 90%;
+            max-width: 85%;
             max-height: 80%;
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+            background: white;
         }
 
-        /* CV Frame */
-        .cv-content iframe { border: none; border-radius: 15px; }
+        /* If lightbox content is an iframe (for PDFs) */
+        #lightbox-content.pdf-viewer {
+            width: 80%;
+            height: 80vh;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            font-weight: bold;
+        }
 
         footer { padding: 2rem; text-align: center; color: #ff9a9e; }
 
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
             .about-content { flex-direction: column; text-align: center; }
-            .carousel-wrapper { overflow-x: auto; }
-            .carousel-track { transition: none; }
+            .carousel-wrapper { overflow-x: auto; cursor: grab; }
         }
     </style>
 </head>
@@ -262,7 +261,7 @@
             <div class="container">
                 <h2>About Me</h2>
                 <div class="about-content">
-                    <div class="profile-pic">                    
+                    <div class="profile-pic">                     
                         <img src="profile_picture.jpg" alt="Ananya Bhide" loading="lazy">
                     </div>
                     <div class="about-text">
@@ -278,23 +277,25 @@
         <section id="projects">
             <div class="container">
                 <h2>Projects</h2>
-                <div class="projects-grid">
-                    <a href="isomorph_details.pdf" target="_blank" class="project-card">
-                        <h3>Isomorph</h3>
-                        <p>A context-aware math learning tool for highschool students.</p>
-                    </a>
-                    <a href="snout_about.pdf" target="_blank" class="project-card">
-                        <h3>Snout & About</h3>
-                        <p>A pet health tracker to help users care for their pets.</p>
-                    </a>
-                    <a href="catering_service.pdf" target="_blank" class="project-card">
-                        <h3>Maharashtrian Thali Service</h3>
-                        <p>A redesign case study on traditional food catering websites.</p>
-                    </a>
-                    <a href="pathfinder.pdf" target="_blank" class="project-card">
-                        <h3>Pathfinder</h3>
-                        <p>Helping the visually impaired navigate dynamic environments.</p>
-                    </a>
+                <div class="carousel-wrapper" data-carousel>
+                    <div class="carousel-track">
+                        <div class="card project-card" onclick="openLightbox('isomorph_details.pdf', 'pdf')">
+                            <h3>Isomorph</h3>
+                            <p>A context-aware math learning tool for highschool students.</p>
+                        </div>
+                        <div class="card project-card" onclick="openLightbox('snout_about.pdf', 'pdf')">
+                            <h3>Snout & About</h3>
+                            <p>A pet health tracker to help users care for their pets.</p>
+                        </div>
+                        <div class="card project-card" onclick="openLightbox('catering_service.pdf', 'pdf')">
+                            <h3>Maharashtrian Thali</h3>
+                            <p>A redesign case study on traditional food catering websites.</p>
+                        </div>
+                        <div class="card project-card" onclick="openLightbox('pathfinder.pdf', 'pdf')">
+                            <h3>Pathfinder</h3>
+                            <p>Helping the visually impaired navigate dynamic environments.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -302,23 +303,23 @@
         <section id="gallery">
             <div class="container">
                 <h2>Gallery</h2>
-                <div class="carousel-wrapper" id="gallery-wrapper">
-                    <div class="carousel-track" id="track">
-                        <div class="gallery-item" onclick="openLightbox(this)">
+                <div class="carousel-wrapper" data-carousel>
+                    <div class="carousel-track">
+                        <div class="card gallery-card" onclick="openLightbox('images/pasta.jpg', 'img')">
                             <img src="images/pasta.jpg" alt="Handmade pasta" loading="lazy">
                             <p>Making pasta</p>
                         </div>
-                        <div class="gallery-item" onclick="openLightbox(this)">
+                        <div class="card gallery-card" onclick="openLightbox('images/mona lisa.mp4', 'video')">
                             <video loop muted playsinline>
                                 <source src="images/mona lisa.mp4" type="video/mp4">
                             </video>
                             <p>Painting the Mona Lisa</p>
                         </div>
-                        <div class="gallery-item" onclick="openLightbox(this)">
+                        <div class="card gallery-card" onclick="openLightbox('images/clay.jpg', 'img')">
                             <img src="images/clay.jpg" alt="Clay Koi Pond artwork" loading="lazy">
-                            <p>Organic paper mache clay art</p>
+                            <p>Organic paper mache art</p>
                         </div>
-                        <div class="gallery-item" onclick="openLightbox(this)">
+                        <div class="card gallery-card" onclick="openLightbox('images/tedx.jpg', 'img')">
                             <img src="images/tedx.jpg" alt="Live painting at TEDx BITS Goa" loading="lazy">
                             <p>Painting for TEDx</p>
                         </div>
@@ -332,7 +333,7 @@
                 <h2>Curriculum Vitae</h2>
                 <div class="cv-content">
                     <iframe src="Ananya_Bhide_Resume_2026.pdf" title="Ananya Bhide Jan 2026" width="100%" height="600px">
-                        <p>Your browser does not support PDFs. <a href="Ananya_Bhide_Resume_2026.pdf">Download Ananya Bhide Jan 2026</a></p>
+                        <p>Your browser does not support PDFs. <a href="Ananya_Bhide_Resume_2026.pdf">Download CV</a></p>
                     </iframe>
                 </div>
             </div>
@@ -340,6 +341,7 @@
     </main>
 
     <div id="lightbox" onclick="closeLightbox()">
+        <span class="close-btn">&times;</span>
         <div id="lightbox-container"></div>
     </div>
 
@@ -348,18 +350,63 @@
     </footer>
 
     <script>
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                if(this.getAttribute('href').startsWith('#')) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
+        // 1. Unified Scroll Logic for all carousels
+        const carousels = document.querySelectorAll('[data-carousel]');
+        
+        carousels.forEach(wrapper => {
+            const track = wrapper.querySelector('.carousel-track');
+            
+            if (window.matchMedia("(hover: hover)").matches) {
+                wrapper.addEventListener('mousemove', (e) => {
+                    const wrapperRect = wrapper.getBoundingClientRect();
+                    const maxScroll = -(track.scrollWidth - wrapperRect.width);
+                    if (maxScroll >= 0) return; // Don't scroll if content fits
+
+                    const mouseX = e.clientX - wrapperRect.left;
+                    const percentage = Math.max(0, Math.min(1, mouseX / wrapperRect.width));
+                    track.style.transform = `translateX(${maxScroll * percentage}px)`;
+                });
+            }
         });
 
-        // 3D Hero Effect
+        // 2. Lightbox Logic (Handles Images, Videos, and PDFs)
+        function openLightbox(source, type) {
+            const lightbox = document.getElementById('lightbox');
+            const container = document.getElementById('lightbox-container');
+            container.innerHTML = ''; 
+
+            let content;
+
+            if (type === 'img') {
+                content = document.createElement('img');
+                content.src = source;
+                content.id = "lightbox-content";
+            } else if (type === 'video') {
+                content = document.createElement('video');
+                content.src = source;
+                content.controls = true;
+                content.autoplay = true;
+                content.id = "lightbox-content";
+            } else if (type === 'pdf') {
+                content = document.createElement('iframe');
+                content.src = source;
+                content.classList.add('pdf-viewer');
+                content.id = "lightbox-content";
+            }
+
+            container.appendChild(content);
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Stop background scrolling
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.style.display = 'none';
+            document.getElementById('lightbox-container').innerHTML = '';
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        }
+
+        // 3. 3D Hero Effect
         const heroSection = document.getElementById('hero-section');
         const title = document.getElementById('hero-title');
         heroSection.addEventListener('mousemove', (e) => {
@@ -371,39 +418,15 @@
         });
         heroSection.addEventListener('mouseleave', () => title.style.transform = `rotateX(0deg) rotateY(0deg)`);
 
-        // Gallery Scroll
-        const wrapper = document.getElementById('gallery-wrapper');
-        const track = document.getElementById('track');
-        if (window.matchMedia("(hover: hover)").matches) {
-            wrapper.addEventListener('mousemove', (e) => {
-                const wrapperRect = wrapper.getBoundingClientRect();
-                const maxScroll = -(track.scrollWidth - wrapperRect.width);
-                const mouseX = e.clientX - wrapperRect.left;
-                const percentage = Math.max(0, Math.min(1, mouseX / wrapperRect.width));
-                track.style.transform = `translateX(${maxScroll * percentage}px)`;
+        // 4. Smooth scrolling for Nav
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
-        }
-
-        // Lightbox Logic
-        function openLightbox(element) {
-            const lightbox = document.getElementById('lightbox');
-            const container = document.getElementById('lightbox-container');
-            const media = element.querySelector('img, video').cloneNode(true);
-            
-            if(media.tagName === 'VIDEO') {
-                media.setAttribute('controls', '');
-                media.removeAttribute('autoplay');
-            }
-            
-            media.id = "lightbox-content";
-            container.innerHTML = '';
-            container.appendChild(media);
-            lightbox.style.display = 'flex';
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-        }
+        });
     </script>
 </body>
 </html>
+
