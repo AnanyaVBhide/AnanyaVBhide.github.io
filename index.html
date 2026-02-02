@@ -13,174 +13,116 @@
             --bg-gradient: linear-gradient(135deg, #FBCFE8 0%, #FFEDD5 50%, #FFFBFB 100%);
             --accent-color: #6B4F5B;
             --text-color: #4A3740;
-            --card-bg: rgba(255, 255, 255, 0.8);
+            --container-bg: rgba(255, 255, 255, 0.7);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Raleway', sans-serif;
             background: var(--bg-gradient);
             background-attachment: fixed;
             color: var(--text-color);
-            overflow-x: hidden;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* Navigation */
+        /* Nav */
         nav {
             position: fixed;
-            top: 0;
-            width: 100%;
+            top: 0; width: 100%;
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(10px);
-            padding: 1.2rem 2rem;
-            box-shadow: 0 2px 20px rgba(107, 79, 91, 0.1);
+            padding: 1.2rem;
             z-index: 1000;
+            box-shadow: 0 2px 15px rgba(107, 79, 91, 0.05);
         }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            gap: 2.5rem;
-        }
+        nav ul { display: flex; justify-content: center; gap: 2.5rem; list-style: none; }
+        nav a { text-decoration: none; color: var(--accent-color); font-weight: 600; }
 
-        nav a {
-            text-decoration: none;
-            color: var(--accent-color);
-            font-weight: 600;
-            transition: opacity 0.3s;
-        }
-
-        nav a:hover { opacity: 0.7; }
-
-        /* Hero Section */
+        /* Hero */
         .hero {
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            perspective: 1000px; 
+            display: flex; justify-content: center; align-items: center;
+            perspective: 1000px;
         }
 
         .hero h1 {
             font-family: 'Sacramento', cursive;
-            font-weight: 400;
-            font-size: 5.5rem; 
+            font-size: 5.5rem;
             color: var(--accent-color);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
             transition: transform 0.1s ease-out;
         }
 
-        /* Carousel Styles */
-        .carousel-container {
-            position: relative;
+        /* Sections */
+        section { padding: 6rem 2rem; min-height: 100vh; }
+        
+        .container {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 0 50px;
+            background: var(--container-bg);
+            padding: 3rem;
+            border-radius: 40px;
+            box-shadow: 0 15px 35px rgba(107, 79, 91, 0.05);
         }
 
-        .carousel-wrapper {
-            width: 100%;
-            overflow: hidden;
-            border-radius: 20px;
-        }
+        h2 { text-align: center; color: var(--accent-color); font-size: 2.5rem; margin-bottom: 2rem; }
 
-        .carousel-track {
-            display: flex;
-            gap: 2rem;
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-            padding: 20px 0;
+        /* About */
+        .about-content { display: flex; align-items: center; gap: 3rem; }
+        .profile-pic {
+            min-width: 200px; height: 200px;
+            border-radius: 50%; overflow: hidden;
+            border: 5px solid white;
+            box-shadow: 0 10px 20px rgba(107, 79, 91, 0.1);
         }
+        .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Arrows */
+        /* Carousel Navigation */
+        .carousel-container { position: relative; padding: 0 40px; }
+        .carousel-wrapper { width: 100%; overflow: hidden; }
+        .carousel-track { display: flex; gap: 2rem; transition: transform 0.5s ease; padding: 1rem 0; }
+        
         .nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 10;
-            font-size: 1.2rem;
-            opacity: 0.8;
-            transition: 0.3s;
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: var(--accent-color); color: white; border: none;
+            width: 35px; height: 35px; border-radius: 50%; cursor: pointer; z-index: 5;
         }
+        .prev-btn { left: 0; } .next-btn { right: 0; }
 
-        .nav-btn:hover { opacity: 1; transform: translateY(-50%) scale(1.1); }
-        .prev-btn { left: 0; }
-        .next-btn { right: 0; }
-
-        /* Dots */
-        .dots-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .dot {
-            width: 10px;
-            height: 10px;
-            background: #D1B8C2;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .dot.active {
-            background: var(--accent-color);
-            transform: scale(1.3);
-        }
+        .dots-container { display: flex; justify-content: center; gap: 8px; margin-top: 15px; }
+        .dot { width: 8px; height: 8px; background: #D1B8C2; border-radius: 50%; cursor: pointer; }
+        .dot.active { background: var(--accent-color); transform: scale(1.2); }
 
         /* Cards */
         .card {
-            width: 320px;
-            height: 380px;
-            background: var(--card-bg);
-            border-radius: 20px;
-            flex-shrink: 0;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            box-shadow: 0 10px 25px rgba(107, 79, 91, 0.1);
-            border: 1px solid rgba(255,255,255,0.3);
+            width: 300px; height: 350px; flex-shrink: 0;
+            background: white; border-radius: 20px; padding: 1.5rem;
+            cursor: pointer; transition: 0.3s;
+            display: flex; flex-direction: column; justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
+        .card:hover { transform: translateY(-10px); }
+        .gallery-card img, .gallery-card video { width: 100%; height: 220px; object-fit: cover; border-radius: 10px; }
+        .gallery-card p { margin-top: 10px; text-align: center; font-weight: 600; font-size: 0.9rem; }
 
-        .project-card h3 { color: var(--accent-color); margin-bottom: 1rem; }
-
-        .gallery-card { padding: 10px; justify-content: space-between; }
-        .gallery-card img, .gallery-card video { 
-            width: 100%; height: 280px; object-fit: cover; border-radius: 15px; 
-        }
-
-        section { padding: 8rem 2rem; min-height: 100vh; }
-        h2 { text-align: center; font-size: 2.5rem; color: var(--accent-color); margin-bottom: 3rem; }
-
+        /* Lightbox & CV */
         #lightbox {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(107, 79, 91, 0.95);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(74, 55, 64, 0.95); z-index: 2000;
+            justify-content: center; align-items: center;
         }
+        .pdf-viewer { width: 85%; height: 90vh; border-radius: 10px; }
+        .close-btn { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
+        
+        iframe[title="Resume"] { border-radius: 20px; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+
+        footer { padding: 3rem; text-align: center; font-weight: 600; color: var(--accent-color); }
 
         @media (max-width: 768px) {
+            .about-content { flex-direction: column; text-align: center; }
             .hero h1 { font-size: 3.5rem; }
-            .carousel-container { padding: 0 10px; }
             .nav-btn { display: none; }
         }
     </style>
@@ -201,123 +143,152 @@
     </header>
 
     <main>
-        <section id="projects">
-            <h2>Projects</h2>
-            <div class="carousel-container" id="carousel-projects">
-                <button class="nav-btn prev-btn">←</button>
-                <div class="carousel-wrapper">
-                    <div class="carousel-track">
-                        <div class="card project-card">
-                            <h3>Pathfinder</h3>
-                            <p>Helping the visually impaired navigate dynamic environments.</p>
-                        </div>
-                        <div class="card project-card">
-                            <h3>Snout & About</h3>
-                            <p>A pet health tracker to help users care for their pets.</p>
-                        </div>
-                        <div class="card project-card">
-                            <h3>Isomorph</h3>
-                            <p>A context-aware math learning tool.</p>
-                        </div>
-                        <div class="card project-card">
-                            <h3>Thali Redesign</h3>
-                            <p>A study on traditional food catering websites.</p>
-                        </div>
+        <section id="about">
+            <div class="container">
+                <h2>About Me</h2>
+                <div class="about-content">
+                    <div class="profile-pic">
+                        <img src="profile_picture.jpg" alt="Ananya Bhide">
+                    </div>
+                    <div class="about-text">
+                        <p>I'm a senior at BITS Goa, India, pursuing Computer Science.</p>
+                        <p>I'm passionate about HCI, UX, human behavior and psychology.</p>
+                        <p>I aim to design tools to enhance the classroom learning experience.</p>
+                        <p>I love to read and make art in my free time!</p>
                     </div>
                 </div>
-                <button class="nav-btn next-btn">→</button>
-                <div class="dots-container"></div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="container">
+                <h2>Projects</h2>
+                <div class="carousel-container" id="carousel-projects">
+                    <button class="nav-btn prev-btn">←</button>
+                    <div class="carousel-wrapper">
+                        <div class="carousel-track">
+                            <div class="card" onclick="openLightbox('projects/Pathfinder.pdf', 'pdf')">
+                                <h3 style="color:var(--accent-color)">Pathfinder</h3>
+                                <p>Helping the visually impaired navigate dynamic environments.</p>
+                            </div>
+                            <div class="card" onclick="openLightbox('projects/Pet Health Help Outline.pdf', 'pdf')">
+                                <h3 style="color:var(--accent-color)">Snout & About</h3>
+                                <p>A pet health tracker to help users care for their pets.</p>
+                            </div>
+                            <div class="card" onclick="openLightbox('isomorph_details.pdf', 'pdf')">
+                                <h3 style="color:var(--accent-color)">Isomorph</h3>
+                                <p>A context-aware math learning tool for highschool students.</p>
+                            </div>
+                            <div class="card" onclick="openLightbox('catering_service.pdf', 'pdf')">
+                                <h3 style="color:var(--accent-color)">Maharashtrian Thali</h3>
+                                <p>A redesign case study on catering websites.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="nav-btn next-btn">→</button>
+                    <div class="dots-container"></div>
+                </div>
             </div>
         </section>
 
         <section id="gallery">
-            <h2>Gallery</h2>
-            <div class="carousel-container" id="carousel-gallery">
-                <button class="nav-btn prev-btn">←</button>
-                <div class="carousel-wrapper">
-                    <div class="carousel-track">
-                        <div class="card gallery-card">
-                            <img src="images/pasta.jpg" alt="Pasta">
-                            <p>Handmade Pasta</p>
-                        </div>
-                        <div class="card gallery-card">
-                            <img src="images/clay.jpg" alt="Clay">
-                            <p>Clay Art</p>
-                        </div>
-                        <div class="card gallery-card">
-                            <img src="images/tedx.jpg" alt="TEDx">
-                            <p>TEDx Painting</p>
+            <div class="container">
+                <h2>Gallery</h2>
+                <div class="carousel-container" id="carousel-gallery">
+                    <button class="nav-btn prev-btn">←</button>
+                    <div class="carousel-wrapper">
+                        <div class="carousel-track">
+                            <div class="card gallery-card" onclick="openLightbox('images/pasta.jpg', 'img')">
+                                <img src="images/pasta.jpg" alt="Pasta">
+                                <p>Handmade pasta</p>
+                            </div>
+                            <div class="card gallery-card" onclick="openLightbox('images/mona lisa.mp4', 'video')">
+                                <video muted><source src="images/mona lisa.mp4" type="video/mp4"></video>
+                                <p>Painting the Mona Lisa</p>
+                            </div>
+                            <div class="card gallery-card" onclick="openLightbox('images/clay.jpg', 'img')">
+                                <img src="images/clay.jpg" alt="Clay artwork">
+                                <p>Organic paper mache art</p>
+                            </div>
                         </div>
                     </div>
+                    <button class="nav-btn next-btn">→</button>
+                    <div class="dots-container"></div>
                 </div>
-                <button class="nav-btn next-btn">→</button>
-                <div class="dots-container"></div>
+            </div>
+        </section>
+
+        <section id="cv">
+            <div class="container">
+                <h2>Curriculum Vitae</h2>
+                <iframe src="Ananya_Bhide_Resume_2026.pdf" title="Resume" width="100%" height="600px"></iframe>
             </div>
         </section>
     </main>
 
-    <div id="lightbox" onclick="this.style.display='none'">
-        <div id="lightbox-container"></div>
+    <div id="lightbox" onclick="closeLightbox()">
+        <span class="close-btn">&times;</span>
+        <div id="lightbox-container" onclick="event.stopPropagation()"></div>
     </div>
+
+    <footer><p>&copy; 2026 Ananya Bhide</p></footer>
 
     <script>
         // Carousel Logic
-        function initCarousel(containerId) {
-            const container = document.getElementById(containerId);
-            const track = container.querySelector('.carousel-track');
-            const cards = container.querySelectorAll('.card');
-            const nextBtn = container.querySelector('.next-btn');
-            const prevBtn = container.querySelector('.prev-btn');
-            const dotsContainer = container.querySelector('.dots-container');
-            
-            let index = 0;
+        function initCarousel(id) {
+            const cont = document.getElementById(id);
+            const track = cont.querySelector('.carousel-track');
+            const cards = cont.querySelectorAll('.card');
+            const dotsCont = cont.querySelector('.dots-container');
+            let idx = 0;
 
-            // Create dots
             cards.forEach((_, i) => {
-                const dot = document.createElement('div');
-                dot.classList.add('dot');
-                if (i === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => goToSlide(i));
-                dotsContainer.appendChild(dot);
+                const d = document.createElement('div');
+                d.className = 'dot' + (i===0?' active':'');
+                d.onclick = () => { idx = i; update(); };
+                dotsCont.appendChild(d);
             });
 
-            const dots = dotsContainer.querySelectorAll('.dot');
+            const update = () => {
+                const w = cards[0].offsetWidth + 32;
+                track.style.transform = `translateX(${-idx * w}px)`;
+                cont.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+            };
 
-            function updateCarousel() {
-                const cardWidth = cards[0].offsetWidth + 32; // width + gap
-                track.style.transform = `translateX(-${index * cardWidth}px)`;
-                dots.forEach(d => d.classList.remove('active'));
-                dots[index].classList.add('active');
-            }
-
-            function goToSlide(i) {
-                index = i;
-                updateCarousel();
-            }
-
-            nextBtn.addEventListener('click', () => {
-                index = (index < cards.length - 1) ? index + 1 : 0;
-                updateCarousel();
-            });
-
-            prevBtn.addEventListener('click', () => {
-                index = (index > 0) ? index - 1 : cards.length - 1;
-                updateCarousel();
-            });
+            cont.querySelector('.next-btn').onclick = () => { idx = (idx + 1) % cards.length; update(); };
+            cont.querySelector('.prev-btn').onclick = () => { idx = (idx - 1 + cards.length) % cards.length; update(); };
         }
 
-        // Initialize both carousels
         initCarousel('carousel-projects');
         initCarousel('carousel-gallery');
+
+        // Lightbox Logic
+        function openLightbox(src, type) {
+            const lb = document.getElementById('lightbox');
+            const ct = document.getElementById('lightbox-container');
+            ct.innerHTML = '';
+            let el;
+            if(type==='img') { el = document.createElement('img'); el.src = src; el.style.maxWidth='90%'; }
+            else if(type==='video') { el = document.createElement('video'); el.src = src; el.controls = true; el.autoplay = true; el.style.maxWidth='90%'; }
+            else if(type==='pdf') { el = document.createElement('iframe'); el.src = src; el.className = 'pdf-viewer'; }
+            ct.appendChild(el);
+            lb.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
 
         // Hero Parallax
         const hero = document.getElementById('hero-section');
         const title = document.getElementById('hero-title');
-        hero.addEventListener('mousemove', (e) => {
-            const x = (window.innerWidth / 2 - e.pageX) / 25;
-            const y = (window.innerHeight / 2 - e.pageY) / 25;
+        hero.onmousemove = (e) => {
+            const x = (window.innerWidth / 2 - e.pageX) / 20;
+            const y = (window.innerHeight / 2 - e.pageY) / 20;
             title.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
-        });
+        };
     </script>
 </body>
 </html>
