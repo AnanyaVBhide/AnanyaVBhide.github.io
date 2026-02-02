@@ -6,9 +6,16 @@
     <title>Ananya Bhide | Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playwrite+AU+SA:wght@100..400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sacramento&family=Raleway:wght@300;600&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #FBCFE8 0%, #FFEDD5 50%, #FFFBFB 100%);
+            --accent-color: #6B4F5B;
+            --text-color: #4A3740;
+            --card-bg: rgba(255, 255, 255, 0.8);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -16,9 +23,10 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #fff5f7 0%, #ffe3e8 100%);
-            color: #333;
+            font-family: 'Raleway', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-color);
             overflow-x: hidden;
             line-height: 1.6;
         }
@@ -28,10 +36,10 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(10px);
             padding: 1.2rem 2rem;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 20px rgba(107, 79, 91, 0.1);
             z-index: 1000;
         }
 
@@ -44,237 +52,141 @@
 
         nav a {
             text-decoration: none;
-            color: #ff9a9e;
+            color: var(--accent-color);
             font-weight: 600;
-            font-size: 1.1rem;
-            transition: color 0.3s;
-            position: relative;
+            transition: opacity 0.3s;
         }
 
-        nav a:hover { color: #ff7b82; }
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #ff9a9e;
-            transition: width 0.3s;
-        }
-        nav a:hover::after { width: 100%; }
+        nav a:hover { opacity: 0.7; }
 
         /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 2rem;
             perspective: 1000px; 
         }
 
         .hero h1 {
-            font-family: "Playwrite AU SA", serif; 
+            font-family: 'Sacramento', cursive;
             font-weight: 400;
-            font-size: 3.5rem; 
-            color: #ff7b82; 
-            margin-bottom: 1rem;
-            cursor: default;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            font-size: 5.5rem; 
+            color: var(--accent-color);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
             transition: transform 0.1s ease-out;
-            transform-style: preserve-3d;
         }
 
-        /* Sections */
-        section {
-            min-height: 100vh;
-            padding: 6rem 2rem 4rem;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 30px;
-            padding: 3rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
-        }
-
-        h2 {
-            font-size: 2.5rem;
-            color: #ff9a9e;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        /* Carousel Wrapper */
-        .carousel-wrapper {
+        /* Carousel Styles */
+        .carousel-container {
             position: relative;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 50px;
+        }
+
+        .carousel-wrapper {
             width: 100%;
             overflow: hidden;
-            padding: 2rem 0;
-            cursor: col-resize;
+            border-radius: 20px;
         }
 
         .carousel-track {
             display: flex;
             gap: 2rem;
-            padding: 10px;
-            transition: transform 0.2s ease-out;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            padding: 20px 0;
         }
 
-        /* Unified Card Styling */
+        /* Arrows */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 1.2rem;
+            opacity: 0.8;
+            transition: 0.3s;
+        }
+
+        .nav-btn:hover { opacity: 1; transform: translateY(-50%) scale(1.1); }
+        .prev-btn { left: 0; }
+        .next-btn { right: 0; }
+
+        /* Dots */
+        .dots-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #D1B8C2;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .dot.active {
+            background: var(--accent-color);
+            transform: scale(1.3);
+        }
+
+        /* Cards */
         .card {
             width: 320px;
             height: 380px;
+            background: var(--card-bg);
             border-radius: 20px;
             flex-shrink: 0;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            overflow: hidden;
+            padding: 2rem;
             display: flex;
             flex-direction: column;
-            background: white;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(255, 154, 158, 0.3);
-        }
-
-        /* Project Card */
-        .project-card {
-            background: linear-gradient(135deg, #ffb3ba 0%, #ff9a9e 100%);
-            color: white;
-            padding: 2.5rem;
             justify-content: center;
+            box-shadow: 0 10px 25px rgba(107, 79, 91, 0.1);
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
-        .project-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
+        .project-card h3 { color: var(--accent-color); margin-bottom: 1rem; }
+
+        .gallery-card { padding: 10px; justify-content: space-between; }
+        .gallery-card img, .gallery-card video { 
+            width: 100%; height: 280px; object-fit: cover; border-radius: 15px; 
         }
 
-        /* Gallery Card */
-        .gallery-card {
-            padding: 1rem;
-            justify-content: space-between;
-        }
+        section { padding: 8rem 2rem; min-height: 100vh; }
+        h2 { text-align: center; font-size: 2.5rem; color: var(--accent-color); margin-bottom: 3rem; }
 
-        .gallery-card img, .gallery-card video {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-            border-radius: 12px;
-        }
-
-        .gallery-card p {
-            margin-top: 10px;
-            color: #ff7b82;
-            font-weight: 600;
-            text-align: center;
-        }
-
-        /* About Section */
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 3rem;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .profile-pic {
-            min-width: 200px;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(255, 154, 158, 0.4);
-        }
-
-        .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* Lightbox */
         #lightbox {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.92);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(107, 79, 91, 0.95);
             z-index: 2000;
             justify-content: center;
             align-items: center;
         }
 
-        #lightbox-container {
-            width: 90%;
-            height: 85%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #lightbox-content {
-            max-width: 100%;
-            max-height: 100%;
-            border-radius: 8px;
-        }
-
-        .pdf-viewer { width: 80%; height: 90vh; border: none; }
-
-        .close-btn {
-            position: absolute;
-            top: 25px;
-            right: 35px;
-            color: white;
-            font-size: 45px;
-            cursor: pointer;
-            z-index: 2100;
-        }
-
-        /* Back to Top Button */
-        #backToTop {
-            display: none;
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 99;
-            background-color: #ff9a9e;
-            color: white;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 15px;
-            border-radius: 50%;
-            font-size: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: background 0.3s, transform 0.3s;
-        }
-
-        #backToTop:hover {
-            background-color: #ff7b82;
-            transform: scale(1.1);
-        }
-
-        footer { padding: 3rem; text-align: center; color: #ff9a9e; font-weight: 500; }
-
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.2rem; }
-            .about-content { flex-direction: column; text-align: center; }
-            .carousel-wrapper { overflow-x: auto; }
-            .pdf-viewer { width: 95%; }
+            .hero h1 { font-size: 3.5rem; }
+            .carousel-container { padding: 0 10px; }
+            .nav-btn { display: none; }
         }
     </style>
 </head>
 <body>
-    
+
     <nav>
         <ul>
             <li><a href="#about">About</a></li>
@@ -289,177 +201,122 @@
     </header>
 
     <main>
-        <section id="about">
-            <div class="container">
-                <h2>About Me</h2>
-                <div class="about-content">
-                    <div class="profile-pic">                     
-                        <img src="profile_picture.jpg" alt="Ananya Bhide">
-                    </div>
-                    <div class="about-text">
-                        <p>I'm a senior at BITS Goa, India, pursuing Computer Science.</p>
-                        <p>I'm passionate about HCI, UX, human behavior and psychology.</p> 
-                        <p>I aim to design tools to enhance the classroom learning experience.</p>
-                        <p>I love to read and make art in my free time!</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section id="projects">
-            <div class="container">
-                <h2>Projects</h2>
-                <div class="carousel-wrapper" data-carousel>
+            <h2>Projects</h2>
+            <div class="carousel-container" id="carousel-projects">
+                <button class="nav-btn prev-btn">←</button>
+                <div class="carousel-wrapper">
                     <div class="carousel-track">
-                        <div class="card project-card" onclick="openLightbox('projects/Pathfinder.pdf', 'pdf')">
+                        <div class="card project-card">
                             <h3>Pathfinder</h3>
                             <p>Helping the visually impaired navigate dynamic environments.</p>
                         </div>
-                        <div class="card project-card" onclick="openLightbox('projects/Pet Health Help Outline.pdf', 'pdf')">
+                        <div class="card project-card">
                             <h3>Snout & About</h3>
                             <p>A pet health tracker to help users care for their pets.</p>
                         </div>
-                        <div class="card project-card" onclick="openLightbox('isomorph_details.pdf', 'pdf')">
+                        <div class="card project-card">
                             <h3>Isomorph</h3>
-                            <p>A context-aware math learning tool for highschool students.</p>
+                            <p>A context-aware math learning tool.</p>
                         </div>
-                        <div class="card project-card" onclick="openLightbox('catering_service.pdf', 'pdf')">
-                            <h3>Maharashtrian Thali</h3>
-                            <p>A redesign case study on traditional food catering websites.</p>
+                        <div class="card project-card">
+                            <h3>Thali Redesign</h3>
+                            <p>A study on traditional food catering websites.</p>
                         </div>
                     </div>
                 </div>
+                <button class="nav-btn next-btn">→</button>
+                <div class="dots-container"></div>
             </div>
         </section>
 
         <section id="gallery">
-            <div class="container">
-                <h2>Gallery</h2>
-                <div class="carousel-wrapper" data-carousel>
+            <h2>Gallery</h2>
+            <div class="carousel-container" id="carousel-gallery">
+                <button class="nav-btn prev-btn">←</button>
+                <div class="carousel-wrapper">
                     <div class="carousel-track">
-                        <div class="card gallery-card" onclick="openLightbox('images/pasta.jpg', 'img')">
-                            <img src="images/pasta.jpg" alt="Handmade pasta">
-                            <p>Making pasta</p>
+                        <div class="card gallery-card">
+                            <img src="images/pasta.jpg" alt="Pasta">
+                            <p>Handmade Pasta</p>
                         </div>
-                        <div class="card gallery-card" onclick="openLightbox('images/mona lisa.mp4', 'video')">
-                            <video loop muted playsinline><source src="images/mona lisa.mp4" type="video/mp4"></video>
-                            <p>Painting the Mona Lisa</p>
+                        <div class="card gallery-card">
+                            <img src="images/clay.jpg" alt="Clay">
+                            <p>Clay Art</p>
                         </div>
-                        <div class="card gallery-card" onclick="openLightbox('images/clay.jpg', 'img')">
-                            <img src="images/clay.jpg" alt="Clay artwork">
-                            <p>Organic paper mache art</p>
-                        </div>
-                        <div class="card gallery-card" onclick="openLightbox('images/tedx.jpg', 'img')">
-                            <img src="images/tedx.jpg" alt="TEDx Painting">
-                            <p>Painting for TEDx</p>
+                        <div class="card gallery-card">
+                            <img src="images/tedx.jpg" alt="TEDx">
+                            <p>TEDx Painting</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <section id="cv">
-            <div class="container">
-                <h2>Curriculum Vitae</h2>
-                <div class="cv-content">
-                    <iframe src="Ananya_Bhide_Resume_2026.pdf" title="Resume" width="100%" height="600px"></iframe>
-                </div>
+                <button class="nav-btn next-btn">→</button>
+                <div class="dots-container"></div>
             </div>
         </section>
     </main>
 
-    <button onclick="scrollToTop()" id="backToTop" title="Go to top">↑</button>
-
-    <div id="lightbox" onclick="closeLightbox()">
-        <span class="close-btn">&times;</span>
-        <div id="lightbox-container" onclick="event.stopPropagation()"></div>
+    <div id="lightbox" onclick="this.style.display='none'">
+        <div id="lightbox-container"></div>
     </div>
 
-    <footer>
-        <p>&copy; 2026 Ananya Bhide</p>
-    </footer>
-
     <script>
-        // Back to Top Button Logic
-        const topBtn = document.getElementById("backToTop");
-        window.onscroll = function() {
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                topBtn.style.display = "block";
-            } else {
-                topBtn.style.display = "none";
-            }
-        };
+        // Carousel Logic
+        function initCarousel(containerId) {
+            const container = document.getElementById(containerId);
+            const track = container.querySelector('.carousel-track');
+            const cards = container.querySelectorAll('.card');
+            const nextBtn = container.querySelector('.next-btn');
+            const prevBtn = container.querySelector('.prev-btn');
+            const dotsContainer = container.querySelector('.dots-container');
+            
+            let index = 0;
 
-        function scrollToTop() {
-            window.scrollTo({top: 0, behavior: 'smooth'});
+            // Create dots
+            cards.forEach((_, i) => {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            });
+
+            const dots = dotsContainer.querySelectorAll('.dot');
+
+            function updateCarousel() {
+                const cardWidth = cards[0].offsetWidth + 32; // width + gap
+                track.style.transform = `translateX(-${index * cardWidth}px)`;
+                dots.forEach(d => d.classList.remove('active'));
+                dots[index].classList.add('active');
+            }
+
+            function goToSlide(i) {
+                index = i;
+                updateCarousel();
+            }
+
+            nextBtn.addEventListener('click', () => {
+                index = (index < cards.length - 1) ? index + 1 : 0;
+                updateCarousel();
+            });
+
+            prevBtn.addEventListener('click', () => {
+                index = (index > 0) ? index - 1 : cards.length - 1;
+                updateCarousel();
+            });
         }
 
-        // Carousel Scroll Logic
-        const carousels = document.querySelectorAll('[data-carousel]');
-        carousels.forEach(wrapper => {
-            const track = wrapper.querySelector('.carousel-track');
-            if (window.matchMedia("(hover: hover)").matches) {
-                wrapper.addEventListener('mousemove', (e) => {
-                    const wrapperRect = wrapper.getBoundingClientRect();
-                    const maxScroll = -(track.scrollWidth - wrapperRect.width);
-                    if (maxScroll >= 0) return;
-                    const mouseX = e.clientX - wrapperRect.left;
-                    const percentage = Math.max(0, Math.min(1, mouseX / wrapperRect.width));
-                    track.style.transform = `translateX(${maxScroll * percentage}px)`;
-                });
-            }
-        });
+        // Initialize both carousels
+        initCarousel('carousel-projects');
+        initCarousel('carousel-gallery');
 
-        // Lightbox Logic
-        function openLightbox(source, type) {
-            const lightbox = document.getElementById('lightbox');
-            const container = document.getElementById('lightbox-container');
-            container.innerHTML = ''; 
-            let content;
-            if (type === 'img') {
-                content = document.createElement('img');
-                content.src = source;
-                content.id = "lightbox-content";
-            } else if (type === 'video') {
-                content = document.createElement('video');
-                content.src = source;
-                content.controls = true;
-                content.autoplay = true;
-                content.id = "lightbox-content";
-            } else if (type === 'pdf') {
-                content = document.createElement('iframe');
-                content.src = source;
-                content.classList.add('pdf-viewer');
-                content.id = "lightbox-content";
-            }
-            container.appendChild(content);
-            lightbox.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; 
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-            document.getElementById('lightbox-container').innerHTML = '';
-            document.body.style.overflow = 'auto'; 
-        }
-
-        // Hero 3D Effect
+        // Hero Parallax
         const hero = document.getElementById('hero-section');
         const title = document.getElementById('hero-title');
         hero.addEventListener('mousemove', (e) => {
-            const { offsetWidth: w, offsetHeight: h } = hero;
-            const moveX = ((e.clientX / w) * 30) - 15;
-            const moveY = ((e.clientY / h) * 30) - 15;
-            title.style.transform = `rotateX(${-moveY}deg) rotateY(${moveX}deg)`;
-        });
-        hero.addEventListener('mouseleave', () => title.style.transform = `rotateX(0deg) rotateY(0deg)`);
-
-        // Smooth Scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-            });
+            const x = (window.innerWidth / 2 - e.pageX) / 25;
+            const y = (window.innerHeight / 2 - e.pageY) / 25;
+            title.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
         });
     </script>
 </body>
