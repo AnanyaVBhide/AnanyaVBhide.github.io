@@ -18,6 +18,8 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        html { scroll-behavior: smooth; }
+
         body {
             font-family: 'Raleway', sans-serif;
             background: var(--bg-gradient);
@@ -25,6 +27,7 @@
             color: var(--text-color);
             line-height: 1.6;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
         /* Nav */
@@ -33,98 +36,122 @@
             top: 0; width: 100%;
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* Safari support */
             padding: 1.2rem;
             z-index: 1000;
             box-shadow: 0 2px 15px rgba(107, 79, 91, 0.05);
         }
 
-        nav ul { display: flex; justify-content: center; gap: 2.5rem; list-style: none; }
-        nav a { text-decoration: none; color: var(--accent-color); font-weight: 600; }
+        nav ul { display: flex; justify-content: center; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
+        nav a { text-decoration: none; color: var(--accent-color); font-weight: 600; font-size: 0.9rem; }
 
         /* Hero */
         .hero {
             min-height: 100vh;
             display: flex; justify-content: center; align-items: center;
             perspective: 1000px;
+            padding: 20px;
+            text-align: center;
         }
 
         .hero h1 {
             font-family: 'Sacramento', cursive;
-            font-size: 5.5rem;
+            font-size: clamp(3rem, 10vw, 5.5rem); /* Fluid typography */
             color: var(--accent-color);
             transition: transform 0.1s ease-out;
+            will-change: transform;
         }
 
         /* Sections */
-        section { padding: 6rem 2rem; min-height: 100vh; }
+        section { padding: 5rem 1rem; min-height: 100vh; display: flex; align-items: center; }
         
         .container {
             max-width: 1100px;
+            width: 100%;
             margin: 0 auto;
             background: var(--container-bg);
-            padding: 3rem;
+            padding: clamp(1.5rem, 5vw, 3rem);
             border-radius: 40px;
             box-shadow: 0 15px 35px rgba(107, 79, 91, 0.05);
         }
 
-        h2 { text-align: center; color: var(--accent-color); font-size: 2.5rem; margin-bottom: 2rem; }
+        h2 { text-align: center; color: var(--accent-color); font-size: 2.5rem; margin-bottom: 1rem; }
+        .subtitle { text-align: center; margin-bottom: 2rem; font-weight: 300; font-size: 0.9rem; opacity: 0.8; }
 
         /* About */
         .about-content { display: flex; align-items: center; gap: 3rem; }
         .profile-pic {
-            min-width: 200px; height: 200px;
+            flex: 0 0 200px; width: 200px; height: 200px;
             border-radius: 50%; overflow: hidden;
             border: 5px solid white;
             box-shadow: 0 10px 20px rgba(107, 79, 91, 0.1);
         }
         .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Carousel Navigation */
-        .carousel-container { position: relative; padding: 0 40px; }
-        .carousel-wrapper { width: 100%; overflow: hidden; }
-        .carousel-track { display: flex; gap: 2rem; transition: transform 0.5s ease; padding: 1rem 0; }
+        /* Carousel */
+        .carousel-container { position: relative; padding: 0 10px; }
+        .carousel-wrapper { width: 100%; overflow: hidden; border-radius: 20px; }
+        .carousel-track { display: flex; transition: transform 0.5s cubic-bezier(0.45, 0, 0.55, 1); padding: 1rem 0; }
         
         .nav-btn {
             position: absolute; top: 50%; transform: translateY(-50%);
             background: var(--accent-color); color: white; border: none;
-            width: 35px; height: 35px; border-radius: 50%; cursor: pointer; z-index: 5;
+            width: 40px; height: 40px; border-radius: 50%; cursor: pointer; z-index: 5;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        .prev-btn { left: 0; } .next-btn { right: 0; }
+        .prev-btn { left: -15px; } .next-btn { right: -15px; }
 
         .dots-container { display: flex; justify-content: center; gap: 8px; margin-top: 15px; }
-        .dot { width: 8px; height: 8px; background: #D1B8C2; border-radius: 50%; cursor: pointer; }
-        .dot.active { background: var(--accent-color); transform: scale(1.2); }
+        .dot { width: 8px; height: 8px; background: #D1B8C2; border-radius: 50%; cursor: pointer; transition: 0.3s; }
+        .dot.active { background: var(--accent-color); transform: scale(1.3); }
 
         /* Cards */
         .card {
-            width: 300px; height: 350px; flex-shrink: 0;
+            width: 100%; /* Default for mobile */
+            flex: 0 0 100%;
+            padding: 0 10px;
+        }
+
+        .card-inner {
             background: white; border-radius: 20px; padding: 1.5rem;
-            cursor: pointer; transition: 0.3s;
+            cursor: pointer; transition: 0.3s; height: 100%;
             display: flex; flex-direction: column; justify-content: center;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
         }
-        .card:hover { transform: translateY(-10px); }
-        .gallery-card img, .gallery-card video { width: 100%; height: 220px; object-fit: cover; border-radius: 10px; }
-        .gallery-card p { margin-top: 10px; text-align: center; font-weight: 600; font-size: 0.9rem; }
+        
+        .card-inner:hover { transform: translateY(-10px); }
+        .gallery-card img, .gallery-card video { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; }
+        .gallery-card p { margin-top: 10px; font-weight: 600; font-size: 0.9rem; }
 
-        /* Lightbox & CV */
+        /* Lightbox */
         #lightbox {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(74, 55, 64, 0.95); z-index: 2000;
+            background: rgba(74, 55, 64, 0.98); z-index: 2000;
             justify-content: center; align-items: center;
         }
-        #lightbox-container { width: 95vw; height: 90vh; display: flex; justify-content: center; align-items: center; }
+        #lightbox-container { width: 90%; height: 80%; display: flex; justify-content: center; align-items: center; }
         .pdf-viewer { width: 100%; height: 100%; border-radius: 10px; border: none; }
-        .close-btn { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; z-index: 2001; }
-        
-        iframe[title="Resume"] { border-radius: 20px; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .close-btn { position: absolute; top: 20px; right: 20px; color: white; font-size: 40px; cursor: pointer; }
 
         footer { padding: 3rem; text-align: center; font-weight: 600; color: var(--accent-color); }
 
+        /* Responsive Breakpoints */
+        @media (min-width: 768px) {
+            .card { flex: 0 0 50%; } /* 2 cards on tablet */
+            nav ul { gap: 2.5rem; }
+            nav a { font-size: 1rem; }
+        }
+
+        @media (min-width: 1024px) {
+            .card { flex: 0 0 33.333%; } /* 3 cards on desktop */
+        }
+
         @media (max-width: 768px) {
             .about-content { flex-direction: column; text-align: center; }
-            .hero h1 { font-size: 3.5rem; }
-            .nav-btn { display: none; }
+            .nav-btn { width: 35px; height: 35px; }
+            section { padding: 4rem 1rem; }
         }
     </style>
 </head>
@@ -154,7 +181,8 @@
                     <div class="about-text">
                         <p>Hi, I'm Ananya :)</p>
                         <p>I'm in my senior year pursuing Computer Science at BITS Pilani, Goa, India.</p>
-                        <p>I'm passionate about HCI, UX, human behavior and psychology.</p>
+                        <p>I'm an upcoming grad student in the MS-HCI program at Georgia Tech.</p>
+                        <p>I'm passionate about psychology and human behavior, especially in cases of atypical learning.</p>
                         <p>I aim to design tools to enhance the classroom learning experience.</p>
                         <p>I love to read and make art in my free time!</p>
                     </div>
@@ -165,26 +193,34 @@
         <section id="projects">
             <div class="container">
                 <h2>Projects</h2>
-                <h3>Click on the project to learn more!</h3>
+                <p class="subtitle">Click on a project to learn more!</p>
                 <div class="carousel-container" id="carousel-projects">
                     <button class="nav-btn prev-btn">←</button>
                     <div class="carousel-wrapper">
                         <div class="carousel-track">
-                            <div class="card" onclick="openLightbox('projects/Pathfinder.pdf', 'pdf')">
-                                <h3 style="color:var(--accent-color)">Pathfinder</h3>
-                                <p>Helping visually impaired individuals navigate dynamic environments.</p>
+                            <div class="card">
+                                <div class="card-inner" onclick="openLightbox('projects/Pathfinder.pdf', 'pdf')">
+                                    <h3 style="color:var(--accent-color)">Pathfinder</h3>
+                                    <p>Helping visually impaired individuals navigate dynamic environments.</p>
+                                </div>
                             </div>
-                            <div class="card" onclick="openLightbox('projects/Pet Health Help Outline.pdf', 'pdf')">
-                                <h3 style="color:var(--accent-color)">Snout & About</h3>
-                                <p>A pet health tracker to help users care for their pets.</p>
+                            <div class="card">
+                                <div class="card-inner" onclick="openLightbox('projects/Pet Health Help Outline.pdf', 'pdf')">
+                                    <h3 style="color:var(--accent-color)">Snout & About</h3>
+                                    <p>A pet health tracker to help users care for their pets.</p>
+                                </div>
                             </div>
-                            <div class="card" onclick="openLightbox('projects/Curves of Life Outline.pdf', 'pdf')">
-                                <h3 style="color:var(--accent-color)">Isomorph</h3>
-                                <p>A context-aware math learning tool for highschool students.</p>
+                            <div class="card">
+                                <div class="card-inner" onclick="openLightbox('projects/Curves of Life Outline.pdf', 'pdf')">
+                                    <h3 style="color:var(--accent-color)">Isomorph</h3>
+                                    <p>A context-aware math learning tool for highschool students.</p>
+                                </div>
                             </div>
-                            <div class="card" onclick="openLightbox('projects/Marathi Thali Outline.pdf', 'pdf')">
-                                <h3 style="color:var(--accent-color)">Maharashtrian Thali</h3>
-                                <p>A redesign case study on Maharashtrian catering websites.</p>
+                            <div class="card">
+                                <div class="card-inner" onclick="openLightbox('projects/Marathi Thali Outline.pdf', 'pdf')">
+                                    <h3 style="color:var(--accent-color)">Maharashtrian Thali</h3>
+                                    <p>A redesign case study on Maharashtrian catering websites.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -197,38 +233,34 @@
         <section id="gallery">
             <div class="container">
                 <h2>Gallery</h2>
-                <h3>Click on the image to view!</h3>
+                <p class="subtitle">Click on an image to view!</p>
                 <div class="carousel-container" id="carousel-gallery">
                     <button class="nav-btn prev-btn">←</button>
                     <div class="carousel-wrapper">
                         <div class="carousel-track">
-                            <div class="card gallery-card" onclick="openLightbox('images/pasta.jpg', 'img')">
-                                <img src="images/pasta.jpg" alt="Pasta">
-                                <p>I like to cook! This was my first time making fresh pasta.</p>
+                            <div class="card">
+                                <div class="card-inner gallery-card" onclick="openLightbox('images/pasta.jpg', 'img')">
+                                    <img src="images/pasta.jpg" alt="Pasta">
+                                    <p>I like to cook! This was my first time making fresh pasta.</p>
+                                </div>
                             </div>
-                            <div class="card gallery-card" onclick="openLightbox('images/mona lisa.mp4', 'video')">
-                                <video muted><source src="images/mona lisa.mp4" type="video/mp4"></video>
-                                <p>A peek into the process of a life-size paint study of the Mona Lisa.</p>
+                            <div class="card">
+                                <div class="card-inner gallery-card" onclick="openLightbox('images/mona lisa.mp4', 'video')">
+                                    <video muted><source src="images/mona lisa.mp4" type="video/mp4"></video>
+                                    <p>A peek into the process of a life-size paint study of the Mona Lisa.</p>
+                                </div>
                             </div>
-                            <div class="card gallery-card" onclick="openLightbox('images/clay.jpg', 'img')">
-                                <img src="images/clay.jpg" alt="Clay artwork">
-                                <p>I made a clay koi pond using organic materials and paper mache!</p>
+                            <div class="card">
+                                <div class="card-inner gallery-card" onclick="openLightbox('images/clay.jpg', 'img')">
+                                    <img src="images/clay.jpg" alt="Clay artwork">
+                                    <p>I made a clay koi pond using organic materials and paper mache!</p>
+                                </div>
                             </div>
-                            <div class="card gallery-card" onclick="openLightbox('images/crochet.jpg', 'img')">
-                                <img src="images/crochet.jpg" alt="Crochet">
-                                <p>I crocheted a tote bag inspired by the movie Tangled.</p>
-                            </div>
-                            <div class="card gallery-card" onclick="openLightbox('images/legion_of_honor.jpg', 'img')">
-                                <img src="images/legion_of_honor.jpg" alt="Museum">
-                                <p>My favorite piece from the Legion of Honor in San Francisco.</p>
-                            </div>
-                            <div class="card gallery-card" onclick="openLightbox('images/origami.jpg', 'img')">
-                                <img src="images/origami.jpg" alt="Origami">
-                                <p>A peek into the 3D gateway we constructed using modular origami.</p>
-                            </div>
-                            <div class="card gallery-card" onclick="openLightbox('images/tedx.jpg', 'img')">
-                                <img src="images/tedx.jpg" alt="Painting">
-                                <p>I made this life-size acrylic painting for TEDx inspired by the cosmos.</p>
+                            <div class="card">
+                                <div class="card-inner gallery-card" onclick="openLightbox('images/crochet.jpg', 'img')">
+                                    <img src="images/crochet.jpg" alt="Crochet">
+                                    <p>I crocheted a tote bag inspired by the movie Tangled.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -254,7 +286,7 @@
     <footer><p>&copy; 2026 Ananya Bhide</p></footer>
 
     <script>
-        // Carousel Logic
+        // Universal Carousel Logic with Infinite Wrap
         function initCarousel(id) {
             const cont = document.getElementById(id);
             const track = cont.querySelector('.carousel-track');
@@ -262,21 +294,32 @@
             const dotsCont = cont.querySelector('.dots-container');
             let idx = 0;
 
+            // Create dots
             cards.forEach((_, i) => {
                 const d = document.createElement('div');
-                d.className = 'dot' + (i===0?' active':'');
+                d.className = 'dot' + (i === 0 ? ' active' : '');
                 d.onclick = () => { idx = i; update(); };
                 dotsCont.appendChild(d);
             });
 
             const update = () => {
-                const w = cards[0].offsetWidth + 32;
-                track.style.transform = `translateX(${-idx * w}px)`;
+                const cardWidth = cards[0].getBoundingClientRect().width;
+                track.style.transform = `translateX(${-idx * cardWidth}px)`;
                 cont.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === idx));
             };
 
-            cont.querySelector('.next-btn').onclick = () => { idx = (idx + 1) % cards.length; update(); };
-            cont.querySelector('.prev-btn').onclick = () => { idx = (idx - 1 + cards.length) % cards.length; update(); };
+            // Wrap logic for Next/Prev
+            cont.querySelector('.next-btn').onclick = () => {
+                idx = (idx + 1 >= cards.length) ? 0 : idx + 1; // Loop back to start
+                update();
+            };
+            cont.querySelector('.prev-btn').onclick = () => {
+                idx = (idx - 1 < 0) ? cards.length - 1 : idx - 1; // Loop to end
+                update();
+            };
+
+            // Resize listener to fix positioning on window change
+            window.addEventListener('resize', update);
         }
 
         initCarousel('carousel-projects');
@@ -317,22 +360,16 @@
             document.body.style.overflow = 'auto';
         }
 
-        // Hero Parallax
+        // Hero Parallax (Disabled on small touch screens for performance)
         const hero = document.getElementById('hero-section');
         const title = document.getElementById('hero-title');
-        hero.onmousemove = (e) => {
-            const x = (window.innerWidth / 2 - e.pageX) / 20;
-            const y = (window.innerHeight / 2 - e.pageY) / 20;
-            title.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
-        };
+        if (window.innerWidth > 768) {
+            hero.onmousemove = (e) => {
+                const x = (window.innerWidth / 2 - e.pageX) / 25;
+                const y = (window.innerHeight / 2 - e.pageY) / 25;
+                title.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+            };
+        }
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
