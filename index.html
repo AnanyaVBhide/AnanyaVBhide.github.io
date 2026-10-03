@@ -7,385 +7,49 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sacramento&family=Raleway:wght@300;600&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            --bg-gradient: linear-gradient(135deg, #FBCFE8 0%, #FFEDD5 50%, #FFFBFB 100%);
-            --accent-color: #6B4F5B;
-            --text-color: #4A3740;
-            --container-bg: rgba(255, 255, 255, 0.7);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: 'Raleway', sans-serif;
-            background: var(--bg-gradient);
-            background-attachment: fixed;
-            color: var(--text-color);
-            line-height: 1.6;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Nav */
-        nav {
-            position: fixed;
-            top: 0; width: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px); /* Safari support */
-            padding: 1.2rem;
-            z-index: 1000;
-            box-shadow: 0 2px 15px rgba(107, 79, 91, 0.05);
-        }
-
-        nav ul { display: flex; justify-content: center; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
-        nav a { text-decoration: none; color: var(--accent-color); font-weight: 600; font-size: 0.9rem; }
-
-        /* Hero */
-        .hero {
-            min-height: 100vh;
-            display: flex; justify-content: center; align-items: center;
-            perspective: 1000px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-family: 'Sacramento', cursive;
-            font-size: clamp(3rem, 10vw, 5.5rem); /* Fluid typography */
-            color: var(--accent-color);
-            transition: transform 0.1s ease-out;
-            will-change: transform;
-        }
-
-        /* Sections */
-        section { padding: 5rem 1rem; min-height: 100vh; display: flex; align-items: center; }
-        
-        .container {
-            max-width: 1100px;
-            width: 100%;
-            margin: 0 auto;
-            background: var(--container-bg);
-            padding: clamp(1.5rem, 5vw, 3rem);
-            border-radius: 40px;
-            box-shadow: 0 15px 35px rgba(107, 79, 91, 0.05);
-        }
-
-        h2 { text-align: center; color: var(--accent-color); font-size: 2.5rem; margin-bottom: 1rem; }
-        .subtitle { text-align: center; margin-bottom: 2rem; font-weight: 300; font-size: 0.9rem; opacity: 0.8; }
-
-        /* About */
-        .about-content { display: flex; align-items: center; gap: 3rem; }
-        .profile-pic {
-            flex: 0 0 200px; width: 200px; height: 200px;
-            border-radius: 50%; overflow: hidden;
-            border: 5px solid white;
-            box-shadow: 0 10px 20px rgba(107, 79, 91, 0.1);
-        }
-        .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* Carousel */
-        .carousel-container { position: relative; padding: 0 10px; }
-        .carousel-wrapper { width: 100%; overflow: hidden; border-radius: 20px; }
-        .carousel-track { display: flex; transition: transform 0.5s cubic-bezier(0.45, 0, 0.55, 1); padding: 1rem 0; }
-        
-        .nav-btn {
-            position: absolute; top: 50%; transform: translateY(-50%);
-            background: var(--accent-color); color: white; border: none;
-            width: 40px; height: 40px; border-radius: 50%; cursor: pointer; z-index: 5;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        .prev-btn { left: -15px; } .next-btn { right: -15px; }
-
-        .dots-container { display: flex; justify-content: center; gap: 8px; margin-top: 15px; }
-        .dot { width: 8px; height: 8px; background: #D1B8C2; border-radius: 50%; cursor: pointer; transition: 0.3s; }
-        .dot.active { background: var(--accent-color); transform: scale(1.3); }
-
-        /* Cards */
-        .card {
-            width: 100%; /* Default for mobile */
-            flex: 0 0 100%;
-            padding: 0 10px;
-        }
-
-        .card-inner {
-            background: white; border-radius: 20px; padding: 1.5rem;
-            cursor: pointer; transition: 0.3s; height: 100%;
-            display: flex; flex-direction: column; justify-content: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            text-align: center;
-        }
-        
-        .card-inner:hover { transform: translateY(-10px); }
-        .gallery-card img, .gallery-card video { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; }
-        .gallery-card p { margin-top: 10px; font-weight: 600; font-size: 0.9rem; }
-
-        /* Lightbox */
-        #lightbox {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(74, 55, 64, 0.98); z-index: 2000;
-            justify-content: center; align-items: center;
-        }
-        #lightbox-container { width: 90%; height: 80%; display: flex; justify-content: center; align-items: center; }
-        .pdf-viewer { width: 100%; height: 100%; border-radius: 10px; border: none; }
-        .close-btn { position: absolute; top: 20px; right: 20px; color: white; font-size: 40px; cursor: pointer; }
-
-        footer { padding: 3rem; text-align: center; font-weight: 600; color: var(--accent-color); }
-
-        /* Responsive Breakpoints */
-        @media (min-width: 768px) {
-            .card { flex: 0 0 50%; } /* 2 cards on tablet */
-            nav ul { gap: 2.5rem; }
-            nav a { font-size: 1rem; }
-        }
-
-        @media (min-width: 1024px) {
-            .card { flex: 0 0 33.333%; } /* 3 cards on desktop */
-        }
-
-        @media (max-width: 768px) {
-            .about-content { flex-direction: column; text-align: center; }
-            .nav-btn { width: 35px; height: 35px; }
-            section { padding: 4rem 1rem; }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="home">
+        <header class="home-head">
+            <h1>Ananya Bhide</h1>
+            <p>Click a circle to explore!</p>
+        </header>
 
-    <nav>
-        <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#gallery">Gallery</a></li>
-            <li><a href="#cv">Resume</a></li>
-        </ul>
-    </nav>
-
-    <header class="hero" id="hero-section">
-        <h1 id="hero-title">Hi there! I'm Ananya Bhide :)</h1>
-    </header>
-
-    <main>
-        <section id="about">
-            <div class="container">
-                <h2>About Me</h2>
-                <div class="about-content">
-                    <div class="profile-pic">
-                        <img src="profile_picture.jpg" alt="Ananya Bhide">
-                    </div>
-                    <div class="about-text">
-                        <p>Hi, I'm Ananya :)</p>
-                        <p>I'm a first-year student in the MS-HCI program at Georgia Tech.</p>
-                        <p>I'm passionate about psychology and human behavior, especially in cases of atypical learning.</p>
-                        <p>I aim to design tools to enhance the classroom learning experience.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="projects">
-            <div class="container">
-                <h2>Projects</h2>
-                <p class="subtitle">Click on a project to learn more!</p>
-                <div class="carousel-container" id="carousel-projects">
-                    <button class="nav-btn prev-btn">←</button>
-                    <div class="carousel-wrapper">
-                        <div class="carousel-track">
-                            <div class="card">
-                                <div class="card-inner" onclick="openLightbox('projects/Pathfinder.pdf', 'pdf')">
-                                    <h3 style="color:var(--accent-color)">Pathfinder</h3>
-                                    <p>Helping visually impaired individuals navigate dynamic environments.</p>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-inner" onclick="openLightbox('projects/Pet Health Help Outline.pdf', 'pdf')">
-                                    <h3 style="color:var(--accent-color)">Snout & About</h3>
-                                    <p>A pet health tracker to help users care for their pets.</p>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-inner" onclick="openLightbox('projects/Curves of Life Outline.pdf', 'pdf')">
-                                    <h3 style="color:var(--accent-color)">Isomorph</h3>
-                                    <p>A context-aware math learning tool for highschool students.</p>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-inner" onclick="openLightbox('projects/Marathi Thali Outline.pdf', 'pdf')">
-                                    <h3 style="color:var(--accent-color)">Maharashtrian Thali</h3>
-                                    <p>A redesign case study on Maharashtrian catering websites.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="nav-btn next-btn">→</button>
-                    <div class="dots-container"></div>
-                </div>
-            </div>
-        </section>
-
-        <section id="gallery">
-            <div class="container">
-                <h2>Gallery</h2>
-                <p class="subtitle">Click on an image to view!</p>
-                <div class="carousel-container" id="carousel-gallery">
-                    <button class="nav-btn prev-btn">←</button>
-                    <div class="carousel-wrapper">
-                        <div class="carousel-track">
-                            <div class="card">
-                                <div class="card-inner gallery-card" onclick="openLightbox('images/pasta.jpg', 'img')">
-                                    <img src="images/pasta.jpg" alt="Pasta">
-                                    <p>I like to cook! This was my first time making fresh pasta.</p>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-inner gallery-card" onclick="openLightbox('images/mona lisa.mp4', 'video')">
-                                    <video muted><source src="images/mona lisa.mp4" type="video/mp4"></video>
-                                    <p>A peek into the process of a life-size paint study of the Mona Lisa.</p>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-inner gallery-card" onclick="openLightbox('images/clay.jpg', 'img')">
-                                    <img src="images/clay.jpg" alt="Clay artwork">
-                                    <p>I made a clay koi pond using organic materials and paper mache!</p>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-inner gallery-card" onclick="openLightbox('images/crochet.jpg', 'img')">
-                                    <img src="images/crochet.jpg" alt="Crochet">
-                                    <p>I crocheted a tote bag inspired by the movie Tangled.</p>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-inner gallery-card" onclick="openLightbox('images/legion_of_honor.jpg', 'img')">
-                                    <img src="images/legion_of_honor.jpg" alt="Art Museum Visit">
-                                    <p>This is my favorite painting from the Legion of Honor in SF!</p>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-inner gallery-card" onclick="openLightbox('images/origami.jpg', 'img')">
-                                    <img src="images/origami.jpg" alt="Modular Origami Arch">
-                                    <p>The early stages of building a usable doorway using modular origami.</p>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-inner gallery-card" onclick="openLightbox('images/tedx.jpg', 'img')">
-                                    <img src="images/tedx.jpg" alt="Painting">
-                                    <p>The rise and fall of a star painted for TEDx.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="nav-btn next-btn">→</button>
-                    <div class="dots-container"></div>
-                </div>
-            </div>
-        </section>
-
-        <section id="cv">
-            <div class="container">
-                <h2>Resume</h2>
-                <iframe src="Resume.pdf" title="Resume" width="100%" height="600px"></iframe>
-            </div>
-        </section>
-    </main>
-
-    <div id="lightbox" onclick="closeLightbox()">
-        <span class="close-btn">&times;</span>
-        <div id="lightbox-container" onclick="event.stopPropagation()"></div>
+        <main class="stage">
+            <div class="blob rose" aria-hidden="true"></div>
+            <div class="blob peach" aria-hidden="true"></div>
+            <div class="blob mauve" aria-hidden="true"></div>
+            <a class="orb big" href="neuro-psych.html" aria-label="Neuroscience and psychology"
+               style="--x:38; --y:36; --d:52; --z:1; --i:0; --lx:36%; --ly:47%; --fx:1.2%; --fy:-1.6%; --dur:10s; --delay:-2s;">
+                <span class="glass"><span class="label">Neuro /<br>psych</span></span>
+            </a>
+            <a class="orb big" href="cs.html" aria-label="Computer Science"
+               style="--x:68; --y:40; --d:52; --z:2; --i:1; --lx:77%; --ly:46%; --fx:-1.2%; --fy:1.4%; --dur:11s; --delay:-5s;">
+                <span class="glass"><span class="label">CS</span></span>
+            </a>
+            <a class="orb big" href="ux.html" aria-label="UX"
+               style="--x:52; --y:66; --d:52; --z:3; --i:2; --lx:50%; --ly:78%; --fx:1%; --fy:1.6%; --dur:12s; --delay:-8s;">
+                <span class="glass"><span class="label">UX</span></span>
+            </a>
+            <a class="orb" href="personal-projects.html" aria-label="Personal Projects"
+               style="--x:24; --y:9; --d:19; --z:5; --i:3; --lx:50%; --ly:50%; --fx:-1.5%; --fy:-2%; --dur:8s; --delay:-1s;">
+                <span class="glass"><span class="label">Personal<br>projects</span></span>
+            </a>
+            <a class="orb" href="art-misc.html" aria-label="Gallery"
+               style="--x:17; --y:68; --d:22; --z:5; --i:5; --lx:50%; --ly:50%; --fx:1.5%; --fy:-1.5%; --dur:9.5s; --delay:-6s;">
+                <span class="glass"><span class="label">Art &amp;<br>misc</span></span>
+            </a>
+            <a class="orb" href="open-to.html" aria-label="Open to Opportunities!"
+               style="--x:78; --y:84; --d:20; --z:5; --i:6; --lx:50%; --ly:50%; --fx:-2%; --fy:-1.5%; --dur:8.5s; --delay:-3s;">
+                <span class="glass"><span class="label">#OpenTo</span></span>
+            </a>
+            <a class="orb hub" href="about.html" aria-label="About me :)"
+               style="--x:53; --y:47; --d:16; --z:6; --i:7; --lx:50%; --ly:50%; --fx:0.8%; --fy:-1.2%; --dur:7s; --delay:-2s;">
+                <span class="glass"><span class="label">About<br>me</span></span>
+            </a>
+        </main>
     </div>
-
-    <footer><p>&copy; 2026 Ananya Bhide</p></footer>
-
-    <script>
-        // Universal Carousel Logic with Infinite Wrap
-        function initCarousel(id) {
-            const cont = document.getElementById(id);
-            const track = cont.querySelector('.carousel-track');
-            const cards = cont.querySelectorAll('.card');
-            const dotsCont = cont.querySelector('.dots-container');
-            let idx = 0;
-
-            // Create dots
-            cards.forEach((_, i) => {
-                const d = document.createElement('div');
-                d.className = 'dot' + (i === 0 ? ' active' : '');
-                d.onclick = () => { idx = i; update(); };
-                dotsCont.appendChild(d);
-            });
-
-            const update = () => {
-                const cardWidth = cards[0].getBoundingClientRect().width;
-                track.style.transform = `translateX(${-idx * cardWidth}px)`;
-                cont.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === idx));
-            };
-
-            // Wrap logic for Next/Prev
-            cont.querySelector('.next-btn').onclick = () => {
-                idx = (idx + 1 >= cards.length) ? 0 : idx + 1; // Loop back to start
-                update();
-            };
-            cont.querySelector('.prev-btn').onclick = () => {
-                idx = (idx - 1 < 0) ? cards.length - 1 : idx - 1; // Loop to end
-                update();
-            };
-
-            // Resize listener to fix positioning on window change
-            window.addEventListener('resize', update);
-        }
-
-        initCarousel('carousel-projects');
-        initCarousel('carousel-gallery');
-
-        // Lightbox Logic
-        function openLightbox(src, type) {
-            const lb = document.getElementById('lightbox');
-            const ct = document.getElementById('lightbox-container');
-            ct.innerHTML = '';
-            let el;
-            if(type==='img') { 
-                el = document.createElement('img'); 
-                el.src = src; 
-                el.style.maxHeight='100%'; 
-                el.style.maxWidth='100%';
-            }
-            else if(type==='video') { 
-                el = document.createElement('video'); 
-                el.src = src; 
-                el.controls = true; 
-                el.autoplay = true; 
-                el.style.maxHeight='100%';
-                el.style.maxWidth='100%';
-            }
-            else if(type==='pdf') { 
-                el = document.createElement('iframe'); 
-                el.src = src; 
-                el.className = 'pdf-viewer'; 
-            }
-            ct.appendChild(el);
-            lb.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        // Hero Parallax (Disabled on small touch screens for performance)
-        const hero = document.getElementById('hero-section');
-        const title = document.getElementById('hero-title');
-        if (window.innerWidth > 768) {
-            hero.onmousemove = (e) => {
-                const x = (window.innerWidth / 2 - e.pageX) / 25;
-                const y = (window.innerHeight / 2 - e.pageY) / 25;
-                title.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
-            };
-        }
-    </script>
+    <script src="site.js"></script>
 </body>
 </html>
